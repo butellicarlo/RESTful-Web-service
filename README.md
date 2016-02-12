@@ -7,6 +7,7 @@ Requirements for RESTful web service:
 - flask
 
 Procedure to set up:
+
 1) Create a database and import NationalNames.csv file in it:
 sqlite3 names.db
 sqlite>create table names(Id integer, Name text, Year integer, Gender text, Count integer)
