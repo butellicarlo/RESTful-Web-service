@@ -15,34 +15,48 @@ pip install pysqlite
 ```
 pip install Flask
 ```
-Procedure to set up:
+Procedure to set up the environment:
 
-1) Create a database and import the csv file in it:
+1) Create a database to work with (the NationalNames.csv file has to be in the root folder):
 
-- Open the terminal, go to the "data" folder then execute the following: 
+- Open the terminal, go in the root folder then execute the following: 
 ```
 $ sqlite3 names.db < schema.sql
+$ sqlite3 names.db
 sqlite>.mode csv
 sqlite>.separator ','
 sqlite>.import NationalNames.csv names
+sqlite>.quit
 ```
 
 2) Call the web service:
 
-- Go in the "script" folder then execute:
+- In the root folder execute the following to start the web server:
 ```
-$ python app.py
+$ python run.py
 ```
+
 3) Retrieve information with curl:
 - Total number of entries:
 ```
-$ curl http://127.0.0.1:5000/entries
+$ curl http://<Server_address>/entries
 ```
 - Total entries from specific name:
 ```
-$ curl --request GET http://127.0.0.1:5000/entry_name?name=Annie
+$ curl --request GET http://<Server_address>/entry_name/<name>
 ```
-- Insert a new entry:
+- Insert a new baby:
 ```
-$ curl --request POST http://127.0.0.1:5000/insert/Ronnie,1987,M,102
+$ curl --request POST http://<Server_address>/insert/<name>,<year>,<gender>,<count>
+```
+
+4) Issus DB realted:
+
+If you get the error `OperationalError: unable to open database file` when you run a `curl` command,
+you have to make sure the directory containing the database file also has write access allowed to the process.
+So, in the terminal, type:
+```
+$ sudo chmod 775 <root>/
+$ sudo chmod 664 <root>/<name_db>.db
+$ sudo chown -R <username> <root>/
 ```
