@@ -10,11 +10,14 @@ app.config["JSON_SORT_KEYS"] = False
 conn = sqlite3.connect('../data/names.db', check_same_thread=False)
 cur = conn.cursor()
 
-#View
+#Views
 @app.route('/',methods=['GET','POST'])
-@app.route("/index",methods=['GET','POST'])
+@app.route('/index',methods=['GET','POST'])
 def api_index():
-	return '{}\n'.format('Welcome')
+	return '{}\n{}\n{}\n{}\n{}\n'.format('Welcome in the Query DB Web Service!', 'How to use it:', \
+                                     '1) Total entries: curl http://<Server_address>/entries', \
+                                     '2) Total entries for name: curl --request GET http://<Server_address>/entry_name/"name"', \
+                                     '3) Insert new name: curl --request POST http://<Server_address>/insert/"name","year","gender(M/F)","count"')
 
 """
 Get the total entries.
