@@ -7,7 +7,9 @@ Requirements for RESTful web service:
 - flask
 
 Procedure to set up:
+
 1) Create a database and import the csv file in it.
+
 Open the teerminale, go to the "data" folder then execute the following: 
 $ sqlite3 names.db < schema.sql
 sqlite>.mode csv
@@ -15,6 +17,7 @@ sqlite>.separator ','
 sqlite>.import NationalNames.csv names
 
 2) Call the web service.
+
 Go in the "script folder" then execute:
 $ python app.py
 
