@@ -11,18 +11,25 @@ conn = sqlite3.connect('../data/names.db', check_same_thread=False)
 cur = conn.cursor()
 
 #View
-@app.route('/')
-def api_root():
+@app.route('/',methods=['GET','POST'])
+@app.route("/index",methods=['GET','POST'])
+def api_index():
 	return '{}\n'.format('Welcome')
 
-# $ curl --request GET http://127.0.0.1:5000/entries
+"""
+Get the total entries.
+(i.e.) $ curl --request GET http://127.0.0.1:5000/entries
+"""
 @app.route('/entries', methods = ['GET'])
 def api_entries():
 	query = cur.execute("SELECT count(*) FROM names;").fetchone()
 	conn.commit()
 	return '{}\n'.format('{}\n'.format(query)[1:-3])
-	
-# $ curl --request GET http://127.0.0.1:5000/entry_name/Annie
+
+"""
+Get the entries for a specific name
+(i.e.) $ curl --request GET http://127.0.0.1:5000/entry_name/Annie
+"""
 @app.route('/entry_name/<name>', methods = ['GET'])
 def api_entry_name(name):
     query = cur.execute("SELECT id, year, gender, count FROM names WHERE name = '%s';" % name)
@@ -30,7 +37,10 @@ def api_entry_name(name):
     entries = [dict({'id': row[0], 'year': row[1], 'gender': row[2], 'count': row[3]}) for row in query.fetchall()]
     return jsonify({'Entries for %s' % name: entries})
 
-# $ curl --request POST http://127.0.0.1:5000/insert/Ronnie,1987,M,102
+"""
+Insert a new name in the DB
+(i.e.) $ curl --request POST http://127.0.0.1:5000/insert/Ronnie,1987,M,102
+"""
 @app.route('/insert/<name>,<year>,<gender>,<count>', methods = ['POST'])
 def api_insert(name,year,gender,count):
     cur.execute('INSERT INTO names (name, year, gender, count) VALUES (?,?,?,?)', (name,year,gender,count))
