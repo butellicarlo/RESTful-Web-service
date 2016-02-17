@@ -23,6 +23,7 @@ Procedure to set up:
 2) Call the web service:
 
 - Go in the "script folder" then execute:
+
 > $ python app.py
 
 3) Retrieve information with curl:
