@@ -6,9 +6,11 @@ Requirements for RESTful web service:
 - sqlite3
 
 > pip install sqlite3
+
 - pysqlite
 
 > pip install pysqlite
+
 - flask
 
 > pip install Flask
