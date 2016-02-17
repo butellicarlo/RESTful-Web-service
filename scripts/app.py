@@ -22,7 +22,7 @@ def api_entries():
 	conn.commit()
 	return '{}\n'.format('{}\n'.format(query)[1:-3])
 	
-# $ curl --request GET http://127.0.0.1:5000/entry_name?name=Annie
+# $ curl --request GET http://127.0.0.1:5000/entry_name/Annie
 @app.route('/entry_name/<name>', methods = ['GET'])
 def api_entry_name(name):
     query = cur.execute("SELECT id, year, gender, count FROM names WHERE name = '%s';" % name)
