@@ -1,10 +1,17 @@
 # RESTful-Web-service
-web service that can be queried by other parties
+A simple Web service that can be queried by other parties by using curl.
 
 Requirements for RESTful web service:
 - python 2.5+
 - sqlite3
+
+> pip install sqlite3
+- pysqlite
+
+> pip install pysqlite
 - flask
+
+> pip install Flask
 
 Procedure to set up:
 
