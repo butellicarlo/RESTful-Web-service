@@ -50,9 +50,9 @@ $ curl --request GET http://<Server_address>/entry_name/<name>
 $ curl --request POST http://<Server_address>/insert/<name>,<year>,<gender>,<count>
 ```
 
-4) Issus DB realted:
+4) Issues DB realted:
 
-If you get the error `OperationalError: unable to open database file` when you run a `curl` command,
+If you get the error `OperationalError: unable to open database file` when you run a `curl` command as client,
 you have to make sure the directory containing the database file also has write access allowed to the process.
 So, in the terminal, type:
 ```
@@ -60,3 +60,4 @@ $ sudo chmod 775 <root>/
 $ sudo chmod 664 <root>/<name_db>.db
 $ sudo chown -R <username> <root>/
 ```
+This should solve that issue.
