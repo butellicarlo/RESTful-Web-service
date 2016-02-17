@@ -29,7 +29,7 @@ Procedure to set up:
 3) Retrieve information with curl:
 - Total number of entries:
 
-> $ curl http://127.0.0.1:5000/entries // to get the total numbero of entries
+> $ curl http://127.0.0.1:5000/entries
 
 - Total entries from specific name:
 
