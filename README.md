@@ -49,7 +49,11 @@ $ curl --request GET http://<Server_address>/entry_name/<name>
 ```
 $ curl --request POST http://<Server_address>/insert/<name>,<year>,<gender>,<count>
 ```
-
+	a) In version 2 of the web service, you can retrieve all the information by typing directly in the Web browser.
+	```
+	- http://<Server_address>/<instruction>
+	```
+	
 4) Issues DB realted:
 
 If you get the error `OperationalError: unable to open database file` when you run a `curl` command as client,
