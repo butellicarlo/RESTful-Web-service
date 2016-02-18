@@ -33,6 +33,12 @@ def total_entries_name():
     return render_template("homepage_name.html",name=name,entries=entries)
     #return entries
 
+@app.route("/first_last_year", methods=['GET', 'POST'])
+def first_last_year():
+    name = request.form['name']
+    entries = first_and_last(name)
+    return render_template("homepage_first_last.html",years=entries)
+
 @app.route("/new_insert", methods=["GET", "POST"])
 def new_insert():
     
