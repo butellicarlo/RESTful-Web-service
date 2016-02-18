@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Click on the button to get all the entries</h1>
+    
+    {% if error %} 
+    <p class=error><strong>Error:</strong> {{ error }}
+    {% endif %}  
+    <form action="{{ url_for('entries') }}">        
+      <p><button type="submit">Get Entries</button></p>
+    </form>
+{% endblock %}
