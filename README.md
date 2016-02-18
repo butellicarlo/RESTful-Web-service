@@ -49,6 +49,11 @@ $ curl --request GET http://<Server_address>/entry_name/<name>
 ```
 $ curl --request POST http://<Server_address>/insert/<name>,<year>,<gender>,<count>
 ```
+- First and last year where a specific name appeared:
+```
+$ curl http://<Server_address>/max_min/<name>
+```
+
 3.1) In version 2 of the web service, you can retrieve all the information by typing directly in the Web browser.
 ```
 http://<Server_address>/<instruction>
