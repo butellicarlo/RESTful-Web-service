@@ -22,3 +22,15 @@ def insert_name(name,year,gender,count):
         con.commit()
         new_id = cur.lastrowid
     return str(new_id)
+
+def first_and_last(name):
+	with sql.connect("names.db") as con:
+		cur = con.cursor()
+		last = cur.execute("select MAX(year) from names where name='%s';" % name ).fetchone()
+		first = cur.execute("select MIN(year) from names where name='%s';" % name ).fetchone()
+		con.commit()
+	return 'Last year is: %s \nFirst year is: %s' % ( \
+		'{}'.format('{}\n'.format(last)[1:-3]), \
+		'{}'.format('{}\n'.format(first)[1:-3]))
+
+

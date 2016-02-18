@@ -7,8 +7,9 @@ from modules import *
 def index():
     return '{}\n{}\n{}\n{}\n{}\n'.format('Welcome in the Query DB Web Service!', 'How to use it:', \
                                      '1) Total entries: curl http://<Server_address>/entries', \
-                                     '2) Total entries for name: curl --request GET http://<Server_address>/entry_name/"name"', \
-                                     '3) Insert new name: curl --request POST http://<Server_address>/insert/"name","year","gender(M/F)","count"')
+                                     '2) Total entries for name: curl --request GET http://<Server_address>/entry_name/<name>', \
+                                     '3) Insert new name: curl --request POST http://<Server_address>/insert/<name>,<year>,<gender(M/F)>,<count>', \
+                                     '4) First and last year where name appear: curl http://<Server_address>/max_min/<name>')
 
 @app.route("/entries")
 def entries():
@@ -24,3 +25,8 @@ def entry_name(name):
 def insert(name,year,gender,count):
     new_id = insert_name(name,year,gender,count)
     return '{}\n'.format(str(new_id))
+
+@app.route("/max_min/<name>", methods=['GET'])
+def max_min(name):
+	years = first_and_last(name)
+	return '{}\n'.format(years)
