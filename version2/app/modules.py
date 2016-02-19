@@ -11,7 +11,7 @@ def total_entries():
 def select_entries_by_name(name):
     with sql.connect("names.db") as con:
         cur = con.cursor()
-        query = cur.execute("SELECT id, year, gender, count FROM names WHERE name = '%s';" % name)
+        query = cur.execute("SELECT id, year, gender, count FROM names WHERE name = '{}';".format(name))
         con.commit()
         entries = [dict({'id': row[0], 'year': row[1], 'gender': row[2], 'count': row[3]}) for row in query.fetchall()]
     return entries
@@ -20,7 +20,7 @@ def select_entries_by_name(name):
 def insert_name(name,year,gender,count):
     with sql.connect("names.db") as con:
         cur = con.cursor()
-        cur.execute("INSERT INTO names (name,year,gender,count) VALUES (?,?,?,?)", (name,year,gender,count) )
+        cur.execute("INSERT INTO names (name,year,gender,count) VALUES ('{}',{},'{}',{})".format(name,year,gender,count) )
         con.commit()
         new_id = cur.lastrowid
     return str(new_id)
@@ -28,8 +28,8 @@ def insert_name(name,year,gender,count):
 def first_and_last(name):
     with sql.connect("names.db") as con:
         cur = con.cursor()
-        last = cur.execute("select MAX(year) from names where name='%s';" % name ).fetchone()
-        first = cur.execute("select MIN(year) from names where name='%s';" % name ).fetchone()
+        last = cur.execute("select MAX(year) from names where name='{}';".format(name) ).fetchone()
+        first = cur.execute("select MIN(year) from names where name='{}';".format(name) ).fetchone()
         con.commit()
     return 'Last year is: %s \nFirst year is: %s' % ( \
         '{}'.format('{}\n'.format(last)[1:-3]), \
