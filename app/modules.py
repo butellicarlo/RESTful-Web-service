@@ -1,6 +1,7 @@
 import sqlite3 as sql
 from flask import current_app
 
+
 def total_entries():
     with sql.connect("names.db") as con:
         cur = con.cursor()
@@ -19,16 +20,19 @@ def select_entries_by_name(name):
             return cached #"The value is cached: {}\n".format(cached)
         result = [dict({'id': row[0], 'year': row[1], 'gender': row[2], 'count': row[3]}) for row in query.fetchall()]
         current_app.cache.set('a_key', result, timeout=180)
-
     return result
 
 def insert_name(name,year,gender,count):
     with sql.connect("names.db") as con:
         cur = con.cursor()
-        cur.execute("INSERT INTO names (name,year,gender,count) VALUES ('{}',{},'{}',{})".format(name,year,gender,count) )
-        con.commit()
-        new_id = cur.lastrowid
-    return str(new_id)
+        try:
+            cur.execute("INSERT INTO names (name,year,gender,count) VALUES ('{}',{},'{}',{})".format(name,year,gender,count) )
+            con.commit()
+            new_id = cur.lastrowid
+            return str(new_id)
+        except Exception as e:
+            print e
+            return 'The baby is already present in the DataBase.'        
 
 def first_and_last(name):
 	with sql.connect("names.db") as con:

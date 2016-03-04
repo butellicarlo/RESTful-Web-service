@@ -1,5 +1,6 @@
 from app import app
 from flask.json import jsonify
+import re
 from modules import *
 
 @app.route('/', methods=['GET','POST'])
@@ -18,9 +19,13 @@ def entries():
 
 @app.route("/entry_name/<name>", methods=["GET"])
 def entry_name(name):
-    entries = select_entries_by_name(name)
-    return jsonify({'Entries for %s' % name: entries})
+    if name.isalpha():
+        entries = select_entries_by_name(name)
+        return jsonify({'Entries for %s' % name: entries})
+    else:
+        return '{}\n'.format('Please, insert a name with NO spaces, numbers or special characters.')
 
+#Check entry values
 @app.route("/insert/<name>,<year>,<gender>,<count>", methods=["POST"])
 def insert(name,year,gender,count):
     new_id = insert_name(name,year,gender,count)
@@ -28,5 +33,8 @@ def insert(name,year,gender,count):
 
 @app.route("/max_min/<name>", methods=['GET'])
 def max_min(name):
-	years = first_and_last(name)
-	return '{}\n'.format(years)
+    if name.isalpha():
+    	years = first_and_last(name)
+    	return '{}\n'.format(years)
+    else:
+        return '{}\n'.format('Please, insert a name with NO spaces, numbers or special characters.')
