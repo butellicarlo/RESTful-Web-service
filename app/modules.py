@@ -16,7 +16,7 @@ def select_entries_by_name(name):
 
         cached = current_app.cache.get('a_key')
         if cached:
-            return "The value is cached: {}\n".format(cached)
+            return cached #"The value is cached: {}\n".format(cached)
         result = [dict({'id': row[0], 'year': row[1], 'gender': row[2], 'count': row[3]}) for row in query.fetchall()]
         current_app.cache.set('a_key', result, timeout=180)
 
