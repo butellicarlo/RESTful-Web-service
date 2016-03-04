@@ -1,4 +1,5 @@
 import sqlite3 as sql
+from flask import current_app
 
 def total_entries():
     with sql.connect("names.db") as con:
@@ -12,13 +13,19 @@ def select_entries_by_name(name):
         cur = con.cursor()
         query = cur.execute("SELECT id, year, gender, count FROM names WHERE name = '{}';".format(name))
         con.commit()
-        entries = [dict({'id': row[0], 'year': row[1], 'gender': row[2], 'count': row[3]}) for row in query.fetchall()]
-    return entries
+
+        cached = current_app.cache.get('a_key')
+        if cached:
+            return "The value is cached: {}\n".format(cached)
+        result = [dict({'id': row[0], 'year': row[1], 'gender': row[2], 'count': row[3]}) for row in query.fetchall()]
+        current_app.cache.set('a_key', result, timeout=30)
+
+    return result
 
 def insert_name(name,year,gender,count):
     with sql.connect("names.db") as con:
         cur = con.cursor()
-        cur.execute("INSERT INTO names (name,year,gender,count) VALUES ({},{},{},{})".format(name,year,gender,count) )
+        cur.execute("INSERT INTO names (name,year,gender,count) VALUES ('{}',{},'{}',{})".format(name,year,gender,count) )
         con.commit()
         new_id = cur.lastrowid
     return str(new_id)

@@ -1,6 +1,9 @@
 from flask import Flask
+from flask.ext.cache import Cache
 
 app = Flask(__name__)
+app.config['CACHE_TYPE'] = 'simple'
+app.cache = Cache(app)
 
 app.config["DATABASE"] = 'names.db'
 app.config['DEBUG'] = True
