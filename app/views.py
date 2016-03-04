@@ -28,8 +28,20 @@ def entry_name(name):
 #Check entry values
 @app.route("/insert/<name>,<year>,<gender>,<count>", methods=["POST"])
 def insert(name,year,gender,count):
-    new_id = insert_name(name,year,gender,count)
-    return '{}\n'.format(str(new_id))
+    if name.isalpha():
+        if year.isnumeric() and 1900 <= int(year) <= 2016:
+            if gender == 'M' or gender == 'F':
+                if count.isnumeric():
+                    new_id = insert_name(name,year,gender,count)
+                    return '{}\n'.format(str(new_id))
+                else:
+                    return '{}\n'.format('Please, insert a numeric value of count.')
+            else:
+                return '{}\n'.format('Please, insert "M" for Male or "F" for female.')
+        else:
+            return '{}\n'.format('Please, insert a numeric value of year grather than 1900 and less then (or equal) to 2016.')
+    else:
+        return '{}\n'.format('Please, insert a name with NO spaces, numbers or special characters.')
 
 @app.route("/max_min/<name>", methods=['GET'])
 def max_min(name):
