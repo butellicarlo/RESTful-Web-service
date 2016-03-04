@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Get total entries for a specific name</h1>
+    
+    {% if error %} 
+    <p class=error><strong>Error:</strong> {{ error }}
+    {% endif %}  
+    <form id="sameForm" method="POST" action="">
+      <p><label>Name:</label> <input type="text" name="name"></p>        
+      <p><input type="button" value="Total Entries" onclick="askForTotal()" ></input></p>
+      <p><input type="button" value="First Last Year" onclick="askForFirstLast()" ></input></p>
+    </form>     
+
+    <script>
+	form=document.getElementById("sameForm");
+	function askForTotal() {
+	        form.action="{{ url_for('total_entries_name') }}";
+	        form.submit();
+	}
+	function askForFirstLast() {
+	        form.action="{{ url_for('first_last_year') }}";
+	        form.submit();
+	}	 
+	</script> 
+
+{% endblock %}

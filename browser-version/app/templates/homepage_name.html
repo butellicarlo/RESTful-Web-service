@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+
+	    <pre id="json"></pre>
+    </form>
+
+   <script type=text/javascript>
+   		//var name = '{{name|safe}}';
+	    var entries = {{entries|tojson|safe}};
+	    //var string = "Entries for " + name.concat(entries);
+	    document.getElementById("json").innerHTML = JSON.stringify(entries, null, 2);
+    </script>
+
+{% endblock %}
